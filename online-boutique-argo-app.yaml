@@ -1,6 +1,6 @@
 # This ArgoCD Application manifest configures ArgoCD to deploy the Online Boutique application to the EKS cluster.
 # It specifies the Git repository containing the K8s manifests, the path to the manifests, and the destination namespace in the cluster.
-# The sync policy is set to automated, enabling automatic synchronization of the application state with the Git repository.
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -17,6 +17,7 @@ spec:
     path: overlays/dev # path to K8s manifests in the repo
     targetRevision: main
   syncPolicy:
+    # enables auto sync between git repo and k8s cluster
     automated:
       prune: true
       selfHeal: true
