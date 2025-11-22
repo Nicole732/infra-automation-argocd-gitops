@@ -1,13 +1,13 @@
 locals {
   aws_k8s_role_mapping = [{
-      rolearn = aws_iam_role.external-admin.arn
-      username = "admin"
-      groups = ["none"]
+    rolearn  = aws_iam_role.external-admin.arn
+    username = "admin"
+    groups   = ["none"]
     },
     {
-      rolearn = aws_iam_role.external-developer.arn
+      rolearn  = aws_iam_role.external-developer.arn
       username = "developer"
-      groups = ["none"]
+      groups   = ["none"]
     }
   ]
 }
@@ -35,7 +35,7 @@ resource "aws_iam_role" "external-admin" {
     policy = jsonencode({
       Version = "2012-10-17"
       Statement = [
-        {       
+        {
           Action   = ["eks:DescribeCluster"]
           Effect   = "Allow"
           Resource = "*"
