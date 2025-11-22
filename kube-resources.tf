@@ -88,7 +88,7 @@ resource "kubernetes_cluster_role_binding" "cluster_viewer" {
 }
 
 # cluster role for argocd to manage resources in the cluster
-resource "kubernetes_cluster_role" "cluster_viewer" {
+resource "kubernetes_cluster_role" "cluster_viewer_argocd" {
   metadata {
     name = "cluster-viewer"
   }
