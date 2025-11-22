@@ -89,6 +89,7 @@ deploy:
   - terraform apply -input=false "planfile"
   # when: manual
 
+# deploy ArgoCD Application to sync GitOps repo with EKS cluster
 deploy_argocd:
   id_tokens:
     GITLAB_OIDC_TOKEN:
