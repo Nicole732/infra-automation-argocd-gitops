@@ -14,7 +14,7 @@ provider "helm" {
 #deploy ArgoCD using Helm chart
 resource "helm_release" "argocd" {
   name             = "argocd"
-  repository       = "https://argo-cd.github.io/argo-helm"
+  repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
   version          = "6.4.0"
   namespace        = "argocd" # create namespace if not exists
