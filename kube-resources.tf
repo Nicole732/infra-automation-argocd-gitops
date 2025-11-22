@@ -1,11 +1,11 @@
 provider "kubernetes" {
-  host = module.eks.cluster_endpoint
+  host                   = module.eks.cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
 
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
-    command = "aws"
-    args = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
+    command     = "aws"
+    args        = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
   }
 }
 
@@ -17,14 +17,14 @@ resource "kubernetes_namespace" "online-boutique" {
 
 resource "kubernetes_role" "namespace-viewer" {
   metadata {
-    name = "namespace-viewer"
+    name      = "namespace-viewer"
     namespace = "online-boutique"
   }
 
   rule {
-    api_groups     = [""]
-    resources      = ["pods", "services", "secrets", "configmap", "persistentvolumes"]
-    verbs          = ["get", "list", "watch", "describe"]
+    api_groups = [""]
+    resources  = ["pods", "services", "secrets", "configmap", "persistentvolumes"]
+    verbs      = ["get", "list", "watch", "describe"]
   }
 
   rule {
@@ -64,8 +64,8 @@ resource "kubernetes_cluster_role" "cluster_viewer" {
 
   rule {
     api_groups = [""]
-    resources = ["pods/portforward"]
-    verbs = ["get", "list", "create"]
+    resources  = ["pods/portforward"]
+    verbs      = ["get", "list", "create"]
   }
 }
 
@@ -75,8 +75,8 @@ resource "kubernetes_cluster_role_binding" "cluster_viewer" {
   }
 
   role_ref {
-    kind     = "ClusterRole"
-    name     = "cluster-viewer"
+    kind      = "ClusterRole"
+    name      = "cluster-viewer"
     api_group = "rbac.authorization.k8s.io"
   }
 
@@ -84,5 +84,24 @@ resource "kubernetes_cluster_role_binding" "cluster_viewer" {
     kind      = "User"
     name      = "admin"
     api_group = "rbac.authorization.k8s.io"
+  }
+}
+
+# cluster role for argocd to manage resources in the cluster
+resource "kubernetes_cluster_role" "cluster_viewer" {
+  metadata {
+    name = "cluster-viewer"
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["*"]
+    verbs      = ["get", "list", "watch", "describe"]
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["pods/portforward"]
+    verbs      = ["get", "list", "create"]
   }
 }
