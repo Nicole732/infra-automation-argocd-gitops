@@ -39,6 +39,7 @@ resource "kubernetes_secret" "argocd_gitops_repo" {
     }
   }
 
+ #define as deploy tokens in the gitops repo
   data = {
     type     = "git"
     url      = var.gitops_url
