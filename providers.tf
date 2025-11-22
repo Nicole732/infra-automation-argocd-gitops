@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 1.0"
   backend "s3" {
     bucket = "infra-bucket-11"
-    key    = "infra/state.tfstate"
+    key    = "infra/state2.tfstate"
     region = "eu-central-1"
   }
   required_providers {
